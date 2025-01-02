@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>go/</title>
+    <link rel="stylesheet" href="/.static/style.css" />
+    <!-- <script type="module" src="/.static/twind/shim.js"></script> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body class="page-container">
+    <div class="header-container">
+      <header class="header">
+        <h1 class="header-title"><a href="/">go/</a></h1>
+        <p>Shortlinks</p>
+      </header>
+    </div>
+
+    <main
+      class="main-content"
+      style="margin-right: auto; margin-left: 1rem; padding: 1rem"
+    >
+      <h2 class="section-title">Link Details</h2>
+      <form method="POST" action="/.create">
+        <div class="form-group">
+          <label for="slug" class="label">http://go/</label>
+          <input
+            id="slug"
+            name="slug"
+            required
+            type="text"
+            size="15"
+            placeholder="shortname"
+            value="{{ url.slug }}"
+            pattern="\w[\w\-\.]*"
+            title="Must start with letter or number; may contain letters, numbers, dashes, and periods."
+            class="input"
+          />
+          <span class="arrow">→</span>
+          <input
+            name="url"
+            required
+            type="text"
+            size="40"
+            placeholder="https://destination-url"
+            value="{{ url.original_url }}"
+            class="input input-long"
+          />
+        </div>
+        <div>
+          <div>
+            <button type="submit" class="button" style="margin-top: 0.5rem">
+              Recreate
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <script>
+        (function () {
+          const fmt = new Intl.DateTimeFormat("en-us", {
+            dateStyle: "long",
+            timeStyle: "long",
+          });
+          const dates = [...document.querySelectorAll(".date")];
+          dates.forEach((x) => {
+            x.textContent = fmt.format(new Date(`${x.textContent.trim()}Z`));
+          });
+        })();
+      </script>
+    </main>
+  </body>
+</html>

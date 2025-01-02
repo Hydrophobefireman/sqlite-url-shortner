@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>go/</title>
+    <link rel="stylesheet" href="/.static/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body class="page-container">
+    <div class="header-container">
+      <header class="header">
+        <h1 class="header-title"><a href="/">go/</a></h1>
+        <p>Shortlinks</p>
+      </header>
+    </div>
+
+    <main class="main-content">
+      <h2 class="section-title">Create a new link</h2>
+
+      <form method="POST" action="/.create" class="form">
+        <div class="form-group">
+          <label for="slug" class="label">http://go/</label>
+          <input
+            id="slu"
+            name="slug"
+            type="text"
+            size="15"
+            placeholder="shortname"
+            pattern="\w[\w\-\.]*"
+            title="Must start with letter or number; may contain letters, numbers, dashes, and periods."
+            class="input"
+          />
+          <span class="arrow"> &#8594; </span>
+          <input
+            name="url"
+            required
+            type="text"
+            placeholder="https://destination-url"
+            class="input input-long"
+          />
+        </div>
+        <button type="submit" class="button">Create</button>
+      </form>
+
+      <h2 class="section-title">Popular Links</h2>
+      <table class="table">
+        <thead class="table-header">
+          <tr>
+            <th class="table-cell">Link</th>
+            <th class="table-cell">Clicks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for url in urls %}
+          <tr class="table-row group">
+            <td class="flex">
+              <a class="visit-link" href="/{{ url.slug }}">go/{{ url.slug }}</a>
+              <a
+                class="link-details group-hover"
+                title="Link Details"
+                href="/.detail/{{ url.slug }}"
+              >
+                <svg
+                  class="info"
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="1.3em"
+                  viewBox="0 0 24 24"
+                  width="1.3em"
+                  fill="#000000"
+                  stroke-width="2"
+                >
+                  <path d="M0 0h24v24H0V0z" fill="none"></path>
+                  <path
+                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                  ></path>
+                </svg>
+              </a>
+            </td>
+            <td class="p-2">
+              {{ url.visit_count }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </main>
+  </body>
+</html>

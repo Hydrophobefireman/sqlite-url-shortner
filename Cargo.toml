@@ -1,0 +1,13 @@
+[package]
+name = "short"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+lazy_static = "1.5.0"
+rand = "0.8.5"
+rocket = { version = "0.5.1", features = ["json"] }
+rocket_dyn_templates = { version = "0.2.0", features = ["minijinja"] }
+rusqlite = "0.32.1"
+serde = { version = "1.0.217", features = ["derive"] }
