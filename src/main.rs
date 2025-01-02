@@ -1,15 +1,17 @@
 mod db;
 mod util;
+use std::net::Ipv4Addr;
+
 use db::{
     delete_url, get_all_urls, get_url_by_slug, increment_visit_count, init_db, insert_url,
     update_url, Url, DB,
 };
 use rocket::form::Form;
-use rocket::fs::{relative, FileServer, Options};
+use rocket::fs::{FileServer, Options};
 use rocket::serde::json::Json;
+use rocket::Config;
 use rocket::{response::Redirect, routes};
 use rocket_dyn_templates::{context, Template};
-use std::env;
 use util::generate_slug;
 #[macro_use]
 extern crate rocket;
@@ -18,7 +20,13 @@ extern crate rocket;
 fn rocket() -> _ {
     println!("Launching!");
     init_db().unwrap();
+    let cfg = Config {
+        address: Ipv4Addr::new(0, 0, 0, 0).into(),
+        ..Config::default()
+    };
+
     rocket::build()
+        .configure(cfg)
         .mount(
             "/",
             routes![
@@ -34,7 +42,7 @@ fn rocket() -> _ {
         )
         .mount(
             "/.static",
-            FileServer::new(relative!("static"), Options::DotFiles | Options::Index),
+            FileServer::new("/static", Options::DotFiles | Options::Index),
         )
         .attach(Template::fairing())
 }
